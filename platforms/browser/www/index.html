@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap4.min.css" />
+    <title>iVolunteer</title>
+</head>
+
+<body>
+    <div id="body_main" class="text-center">
+        <div data-role="page" id="pageone">
+            <div data-role="header">
+                <h3>iVolunteer</h3>
+            </div>
+            <hr>
+            <button id="btn_menu" class="btn btn-info" onclick="show_add()">Add new Activity</button>
+            <br/>
+            <hr>
+            <button id="btn_menu" class="btn btn-info" onclick="show_view()">View All Activity</button>
+            <br/>
+            <hr>
+            <button id="btn_menu" class="btn btn-info" onclick="show_search()">Search an activity</button>
+            <br/>
+            <hr>
+        </div>
+    </div>
+    <div id="body_add">
+        <div class="panel panel-default" data-role="page" id="pagefour">
+            <div class="panel-heading text-center" data-role="header">
+                <h3>Add new Activity</h3>
+                <hr>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body ui-content" data-role="main">
+                <div class="form-group">
+                    <label for="email">Activity name</label>
+                    <input class="form-control" type="email" name="activity" id="activity" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Location</label>
+                    <input class="form-control" type="text" name="location" id="location" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Date</label>
+                    <input class="form-control" type="date" name="date" id="date" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Time</label>
+                    <input class="form-control" type="time" name="time" id="time" />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Volunteer name</label>
+                    <input class="form-control" type="text" name="volunteer" id="volunteer" required />
+                </div>
+                <div class="form-group ">
+                    <button class="btn btn-primary" onclick="show_main()">Back to menu</button>
+                    <input class="btn btn-primary float-right" type="button" onclick="addNewVolunteer()" value="Save" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <div id="body_view">
+        <div data-role="page">
+            <div class="text-center">
+                <h3>Activity List</h3>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="ui-content">
+                <div class="form-group" id="lsActivity">
+                </div>
+                <div class="form-group ">
+                    <hr>
+                    <button class="btn btn-primary" onclick="show_main()">Back to menu</button>
+                    <button class="btn btn-primary float-right" onclick="listVolunteer()">Refresh</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <div id="body_search">
+        <div data-role="page">
+            <div class="text-center">
+                <h3>Search an activity</h3>
+                <hr>
+            </div>
+            <!-- /.panel-heading -->
+
+            <div class="form-group">
+                <label for="slActivity">Select an activity:</label>
+                <div class="row" style="margin-left:0px">
+                    <select style="width: 50%" class="form-control" id="slActivity">
+                    </select>
+                    <button class="btn btn-primary float-right" type="button" onclick="searchVolunteer()">Search</button>
+                </div>
+            </div>
+            <div class="form-group" id="rsActivity">
+            </div>
+            <div class="ui-content">
+                <div class="form-group ">
+                    <hr>
+                    <button class="btn btn-primary" onclick="show_main()">Back to menu</button>
+                    <button class="btn btn-primary float-right" onclick="show_search()">Refresh</button>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/volunteer.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>

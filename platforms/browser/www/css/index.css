@@ -1,0 +1,19 @@
+html,body
+{
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 100%;
+}
+
+#body_main, #body_add, #body_view, #body_search
+{
+    height: 80%;
+}
+#btn_menu{
+    width: 50%;
+}
+
+#body_add, #body_view, #body_search
+{
+    display: none;
+}
